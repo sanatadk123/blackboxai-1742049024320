@@ -1,57 +1,131 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Voice cards container
-    const voiceContainer = document.querySelector('.flex.justify-center');
-    const voices = Array.from(voiceContainer.children);
-    
-    // Navigation buttons
-    const prevButton = document.querySelector('.fas.fa-chevron-left').parentElement;
-    const nextButton = document.querySelector('.fas.fa-chevron-right').parentElement;
-    
-    // Play buttons
-    const playButtons = document.querySelectorAll('.fa-play');
-    
-    // Handle play button clicks
-    playButtons.forEach(button => {
-        button.parentElement.addEventListener('click', function() {
-            // Here would be the actual audio playback logic
-            console.log('Playing voice sample...');
+    // Voice cards
+    const voiceCards = document.querySelectorAll('.voice-card') || [];
+    let selectedVoice = null;
+
+    // Select voice card
+    voiceCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove selection from other cards
+            voiceCards.forEach(c => c.classList.remove('ring-2', 'ring-blue-500'));
+            // Add selection to clicked card
+            this.classList.add('ring-2', 'ring-blue-500');
+            selectedVoice = this;
         });
     });
-    
-    // Handle navigation clicks
-    let currentPosition = 0;
-    
-    prevButton.addEventListener('click', () => {
-        if (currentPosition > 0) {
-            currentPosition--;
-            updateCarousel();
-        }
-    });
-    
-    nextButton.addEventListener('click', () => {
-        if (currentPosition < voices.length - 4) {
-            currentPosition++;
-            updateCarousel();
-        }
-    });
-    
-    function updateCarousel() {
-        const offset = -currentPosition * (128 + 32); // card width + gap
-        voiceContainer.style.transform = `translateX(${offset}px)`;
+
+    // Text input area
+    const textArea = document.querySelector('textarea');
+    const uploadBtn = document.querySelector('.fa-upload')?.parentElement;
+    const pasteBtn = document.querySelector('.fa-paste')?.parentElement;
+
+    // Handle file upload
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.txt';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file && textArea) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        textArea.value = e.target.result;
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        });
     }
-    
-    // Add smooth transition to the container
-    voiceContainer.style.transition = 'transform 0.3s ease-in-out';
-    
-    // Handle language selector
-    const languageSelect = document.querySelector('select');
-    languageSelect.addEventListener('change', function() {
-        console.log('Selected language:', this.value);
-    });
-    
-    // Handle next button
-    const nextPageButton = document.querySelector('.bg-\\[\\#0088ff\\]');
-    nextPageButton.addEventListener('click', function() {
-        console.log('Proceeding to next step...');
-    });
+
+    // Handle paste
+    if (pasteBtn && textArea) {
+        pasteBtn.addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                textArea.value = text;
+            } catch (err) {
+                console.error('Failed to read clipboard:', err);
+            }
+        });
+    }
+
+    // Voice settings
+    const speedSlider = document.querySelector('input[type="range"]:nth-of-type(1)');
+    const pitchSlider = document.querySelector('input[type="range"]:nth-of-type(2)');
+    let speed = 1;
+    let pitch = 1;
+
+    if (speedSlider) {
+        speedSlider.addEventListener('input', function() {
+            speed = this.value / 50; // Convert to 0-2 range
+        });
+    }
+
+    if (pitchSlider) {
+        pitchSlider.addEventListener('input', function() {
+            pitch = this.value / 50; // Convert to 0-2 range
+        });
+    }
+
+    // Reset button
+    const resetBtn = document.querySelector('.fa-undo')?.parentElement;
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            if (textArea) textArea.value = '';
+            if (speedSlider) speedSlider.value = 50;
+            if (pitchSlider) pitchSlider.value = 50;
+            speed = 1;
+            pitch = 1;
+            voiceCards.forEach(c => c.classList.remove('ring-2', 'ring-blue-500'));
+            selectedVoice = null;
+        });
+    }
+
+    // Play button
+    const playBtn = document.querySelector('.gradient-bg.text-white');
+    if (playBtn && textArea) {
+        playBtn.addEventListener('click', function() {
+            if (!textArea.value.trim()) {
+                alert('कृपया पाठ लेख्नुहोस्।');
+                return;
+            }
+            if (!selectedVoice) {
+                alert('कृपया आवाज छनौट गर्नुहोस्।');
+                return;
+            }
+            
+            // Here you would integrate with a TTS service
+            console.log('Playing text:', {
+                text: textArea.value,
+                voice: selectedVoice.querySelector('h4').textContent,
+                speed: speed,
+                pitch: pitch
+            });
+        });
+    }
+
+    // Download button
+    const downloadBtn = document.querySelector('.fa-download')?.parentElement;
+    if (downloadBtn && textArea) {
+        downloadBtn.addEventListener('click', function() {
+            if (!textArea.value.trim()) {
+                alert('कृपया पाठ लेख्नुहोस्।');
+                return;
+            }
+            if (!selectedVoice) {
+                alert('कृपया आवाज छनौट गर्नुहोस्।');
+                return;
+            }
+
+            // Here you would implement the download functionality
+            console.log('Downloading audio for:', {
+                text: textArea.value,
+                voice: selectedVoice.querySelector('h4').textContent,
+                speed: speed,
+                pitch: pitch
+            });
+        });
+    }
 });
