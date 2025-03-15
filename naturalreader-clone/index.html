@@ -1,113 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NaturalReader Clone</title>
+    <title>नेपाली आवाज - Nepali Text to Speech</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Mukta for Nepali -->
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Mukta', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0088ff 0%, #00bfff 100%);
+        }
+        .voice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-white min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Header -->
-        <h1 class="text-4xl font-semibold text-center text-[#0088ff] mb-8">Welcome to NaturalReader</h1>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">नेपाली आवाज</h1>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hover:text-gray-200">सहयोग</a>
+                <a href="#" class="hover:text-gray-200">सम्पर्क</a>
+                <button class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100">
+                    साइन इन
+                </button>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Language Selector -->
-        <div class="relative w-64 mx-auto mb-12">
-            <select class="w-full p-2.5 text-gray-700 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-[#0088ff]">
-                <option>English (US)</option>
-            </select>
-            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                <i class="fas fa-chevron-down text-gray-400"></i>
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Main Content -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <!-- Text Input Area -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-semibold text-gray-800">पाठ लेख्नुहोस्</h2>
+                    <div class="flex space-x-4">
+                        <button class="text-gray-600 hover:text-blue-600">
+                            <i class="fas fa-upload mr-2"></i>फाइल अपलोड
+                        </button>
+                        <button class="text-gray-600 hover:text-blue-600">
+                            <i class="fas fa-paste mr-2"></i>पेस्ट
+                        </button>
+                    </div>
+                </div>
+                <textarea 
+                    class="w-full h-40 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="यहाँ नेपाली पाठ टाइप गर्नुहोस् वा पेस्ट गर्नुहोस्..."
+                ></textarea>
+            </div>
+
+            <!-- Voice Settings -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- Voice Selection -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">आवाज छनौट</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="voice-card bg-gray-50 p-4 rounded-lg cursor-pointer transition-all duration-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">सरोज</h4>
+                                    <p class="text-sm text-gray-600">पुरुष आवाज</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="voice-card bg-gray-50 p-4 rounded-lg cursor-pointer transition-all duration-300">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                                    <i class="fas fa-user text-pink-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">सीता</h4>
+                                    <p class="text-sm text-gray-600">महिला आवाज</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Settings -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">आवाज सेटिङ्स</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">गति</label>
+                            <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">पिच</label>
+                            <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-4">
+                    <button class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200">
+                        <i class="fas fa-undo mr-2"></i>रिसेट
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-200">
+                        <i class="fas fa-download mr-2"></i>डाउनलोड
+                    </button>
+                </div>
+                <button class="gradient-bg text-white px-8 py-3 rounded-lg font-medium hover:opacity-90">
+                    <i class="fas fa-play mr-2"></i>प्ले
+                </button>
             </div>
         </div>
 
-        <!-- Voice Selection Carousel -->
-        <div class="relative mb-12">
-            <!-- Left Arrow -->
-            <button class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md">
-                <i class="fas fa-chevron-left text-gray-600"></i>
-            </button>
-
-            <!-- Voice Cards Container -->
-            <div class="flex justify-center gap-8 px-12">
-                <!-- Adam -->
-                <div class="text-center">
-                    <div class="relative w-32 h-32 mb-3">
-                        <div class="w-full h-full rounded-full bg-gray-200 overflow-hidden">
-                            <img src="images/voices/placeholder.svg" alt="Adam" class="w-full h-full object-cover">
-                        </div>
-                        <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all">
-                            <i class="fas fa-play text-white text-2xl"></i>
-                        </button>
-                    </div>
-                    <h3 class="font-medium">Adam (US)</h3>
-                    <p class="text-sm text-gray-600">Deep, Engaging</p>
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-microphone text-white text-xl"></i>
                 </div>
-
-                <!-- Evelyn -->
-                <div class="text-center">
-                    <div class="relative w-32 h-32 mb-3">
-                        <div class="w-full h-full rounded-full bg-gray-200 overflow-hidden">
-                            <img src="images/voices/placeholder.svg" alt="Evelyn" class="w-full h-full object-cover">
-                        </div>
-                        <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all">
-                            <i class="fas fa-play text-white text-2xl"></i>
-                        </button>
-                    </div>
-                    <h3 class="font-medium">Evelyn (US)</h3>
-                    <p class="text-sm text-gray-600">Soft, Emotional</p>
-                </div>
-
-                <!-- Derek -->
-                <div class="text-center">
-                    <div class="relative w-32 h-32 mb-3">
-                        <div class="w-full h-full rounded-full bg-gray-200 overflow-hidden">
-                            <img src="images/voices/placeholder.svg" alt="Derek" class="w-full h-full object-cover">
-                        </div>
-                        <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all">
-                            <i class="fas fa-play text-white text-2xl"></i>
-                        </button>
-                    </div>
-                    <h3 class="font-medium">Derek (US)</h3>
-                    <p class="text-sm text-gray-600">Formal, Confident</p>
-                </div>
-
-                <!-- Lola -->
-                <div class="text-center">
-                    <div class="relative w-32 h-32 mb-3">
-                        <div class="w-full h-full rounded-full bg-gray-200 overflow-hidden">
-                            <img src="images/voices/placeholder.svg" alt="Lola" class="w-full h-full object-cover">
-                        </div>
-                        <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all">
-                            <i class="fas fa-play text-white text-2xl"></i>
-                        </button>
-                    </div>
-                    <h3 class="font-medium">Lola (US)</h3>
-                    <p class="text-sm text-gray-600">Calm, Warm</p>
-                </div>
+                <h3 class="text-xl font-semibold mb-2">प्राकृतिक आवाज</h3>
+                <p class="text-gray-600">उच्च गुणस्तरीय नेपाली आवाज जसले प्राकृतिक रूपमा पाठ पढ्छ।</p>
             </div>
-
-            <!-- Right Arrow -->
-            <button class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md">
-                <i class="fas fa-chevron-right text-gray-600"></i>
-            </button>
-        </div>
-
-        <!-- Next Button -->
-        <div class="text-center">
-            <button class="bg-[#0088ff] text-white px-12 py-3 rounded-md text-lg font-medium hover:bg-[#0077ee] transition-colors">
-                Next
-            </button>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-sliders-h text-white text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">सजिलो नियन्त्रण</h3>
+                <p class="text-gray-600">आवाजको गति र पिच सजिलै मिलाउन सकिने।</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-cloud-download-alt text-white text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">MP3 डाउनलोड</h3>
+                <p class="text-gray-600">तयार भएको आवाजलाई MP3 फाइलको रूपमा डाउनलोड गर्न सकिने।</p>
+            </div>
         </div>
     </div>
 
